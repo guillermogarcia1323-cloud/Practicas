@@ -1,0 +1,125 @@
+
+
+#include <stdio.h>
+int main() {
+    int a[6] = {1, 2, 0, 0, 3, 2};  // Resultados fijos de 6 partidos
+    int seleccion[6];              // Para guardar los índices seleccionados
+    int partidos_guardados = 0;
+    int opcion, suma = 0, seleccion_temp, partido, nv;
+    float promedio;
+
+    do {
+        printf("\n ===== MENU: Partidos de las chivas ===== \n");
+        printf(" 1. Mostrar un partido en especifico\n");
+        printf(" 2. Mostrar todos los partidos, suma y promedio\n");
+        printf(" 3. Modificar un resultado en especifico\n");
+        printf(" 4. Modificar todos los resultados\n");
+        printf(" 5. Guardar partidos seleccionados\n");
+        printf(" 0. Salir\n");
+        printf(" Selecciona una opcion: ");
+        scanf("%d", &opcion);
+
+        switch(opcion) {
+
+            case 1:
+                printf("\n Ingresa el numero del partido (1-6): ");
+                scanf("%d", &partido);
+
+                if (partido < 1 || partido > 6) {
+                    printf("\n Numero de partido invalido.\n");
+                } else {
+                    printf(" Partido %d: %d\n", partido, a[partido - 1]);
+                }
+                break;
+
+
+            case 2: {
+                printf("\n --- Todos los partidos --- \n\n");
+                for (int i = 0; i < 6; i++) {
+                    printf(" Partido %d : %d\n", i + 1, a[i]);
+                    suma += a[i];
+                }
+                promedio = (float)suma / 6;
+                printf(" Suma total: %d\n", suma);
+                printf(" Promedio: %.2f\n", promedio);
+                break;
+            }
+            case 3: {
+                printf("\n Ingresa el numero del partido a modificar (1-6): ");
+                scanf("%d", &partido);
+
+                if (partido < 1 || partido > 6) {
+                    printf("\n Numero de partido invalido.\n");
+                } else {
+                    printf("\n Valor actual: %d\n", a[partido - 1]);
+                    printf("\n Ingresa el nuevo valor: ");
+                    scanf("%d", &nv);
+                    a[partido - 1] = nv;
+                    printf("\n Partido %d actualizado.\n", partido);
+                }
+                break;
+            }
+            case 4: {
+                    printf("\n Modificando todos los resultados:\n");
+                    for (int i = 0; i < 6; i++) {
+                        printf("\n Valor actual del partido %d: %d\n", i + 1, a[i]);
+                        printf("\n Ingresa el nuevo valor: ");
+                        scanf("%d", &a[i]);
+                    }
+                    printf("\n --- Resultados actualizados --- \n");
+                    for (int i = 0; i < 6; i++) {
+                        printf(" Partido %d: %d\n", i + 1, a[i]);
+                    }
+                    break;
+            }
+
+            case 5: {
+               // Preguntar al usuario qué partidos quiere guardar
+    printf("\n ¿Cuales partidos quieres guardar? (Ingresa numeros del 1 al 6).\n");
+    printf(" Ingresa 0 para terminar la seleccion.\n\n");
+
+
+    while (1) {
+        printf(" Selecciona un partido (1-6) o 0 para finalizar: ");
+        scanf("%d", &opcion);
+
+
+        if (opcion == 0) {
+            break;
+        }
+
+        if (opcion < 1 || opcion > 6) {
+            printf(" Numero invalido. Intenta de nuevo.\n");
+            continue;
+        }
+
+        // Guardar el índice (convertimos a índice 0 basado)
+        seleccion[partidos_guardados] = opcion - 1;
+        partidos_guardados++;
+    }
+
+    // Mostrar los partidos guardados
+    if (partidos_guardados > 0) {
+        printf("\n Has guardado los siguientes partidos:\n");
+        int suma = 0;
+        for (int i = 0; i < partidos_guardados; i++) {
+            int ind = seleccion[i];
+            printf("\n Partido %d: %d\n", ind + 1, a[ind]);
+            suma += a[ind];
+        }
+                }
+                break;
+}
+
+            case 0:
+                printf(" Saliendo del programa...\n");
+                break;
+
+            default:
+                printf(" Opcion invalida. Intenta de nuevo.\n");
+        }
+
+    } while (opcion != 0);
+
+    return 0;
+}
